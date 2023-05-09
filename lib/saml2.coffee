@@ -483,6 +483,8 @@ parse_authn_response = (saml_response, sp_private_keys, idp_certificates, allow_
               (_.isString(sp_audience) and sp_audience.toLowerCase() == audienceValue.toLowerCase())
             )
           if !validAudience?
+            Console.log "Audiences:" + util.inspect(audiences)
+            Console.log "Audience restriction failed. Expected #{sp_audience}, but got #{audiences[0].firstChild?.data}"
             return cb_wf new SAMLError('SAML Response is not valid for this audience')
       return cb_wf null, decrypted_assertion
     (validated_assertion, cb_wf) ->
